@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "./api";
+
+package main;
+
+service CurrencyConvertor {
+    rpc ExchangeRate(ExchangeRateRequest) returns (ExchangeRateRequest) {}
+}
+
+message ExchangeRateRequest {
+    string curr_from = 1;
+    string curr_to = 2;
+}
+
+message ExchangeRateResponse {
+    double rate = 1;
+}
