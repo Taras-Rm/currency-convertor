@@ -18,11 +18,12 @@ func main()  {
 	client := api.NewCurrencyConvertorClient(conn)
 
 	resp, err := client.ExchangeRate(context.Background(), &api.ExchangeRateRequest{
-
+		CurrFrom: "usd",
+		CurrTo: "uah",
 	})
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println(resp)
+	fmt.Println(resp.Rate)
 }
