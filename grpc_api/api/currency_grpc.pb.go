@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CurrencyConvertorClient interface {
-	ExchangeRate(ctx context.Context, in *ExchangeRateRequest, opts ...grpc.CallOption) (*ExchangeRateRequest, error)
+	ExchangeRate(ctx context.Context, in *ExchangeRateRequest, opts ...grpc.CallOption) (*ExchangeRateResponse, error)
 }
 
 type currencyConvertorClient struct {
@@ -33,8 +33,8 @@ func NewCurrencyConvertorClient(cc grpc.ClientConnInterface) CurrencyConvertorCl
 	return &currencyConvertorClient{cc}
 }
 
-func (c *currencyConvertorClient) ExchangeRate(ctx context.Context, in *ExchangeRateRequest, opts ...grpc.CallOption) (*ExchangeRateRequest, error) {
-	out := new(ExchangeRateRequest)
+func (c *currencyConvertorClient) ExchangeRate(ctx context.Context, in *ExchangeRateRequest, opts ...grpc.CallOption) (*ExchangeRateResponse, error) {
+	out := new(ExchangeRateResponse)
 	err := c.cc.Invoke(ctx, "/main.CurrencyConvertor/ExchangeRate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *currencyConvertorClient) ExchangeRate(ctx context.Context, in *Exchange
 // All implementations must embed UnimplementedCurrencyConvertorServer
 // for forward compatibility
 type CurrencyConvertorServer interface {
-	ExchangeRate(context.Context, *ExchangeRateRequest) (*ExchangeRateRequest, error)
+	ExchangeRate(context.Context, *ExchangeRateRequest) (*ExchangeRateResponse, error)
 	mustEmbedUnimplementedCurrencyConvertorServer()
 }
 
@@ -54,7 +54,7 @@ type CurrencyConvertorServer interface {
 type UnimplementedCurrencyConvertorServer struct {
 }
 
-func (UnimplementedCurrencyConvertorServer) ExchangeRate(context.Context, *ExchangeRateRequest) (*ExchangeRateRequest, error) {
+func (UnimplementedCurrencyConvertorServer) ExchangeRate(context.Context, *ExchangeRateRequest) (*ExchangeRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExchangeRate not implemented")
 }
 func (UnimplementedCurrencyConvertorServer) mustEmbedUnimplementedCurrencyConvertorServer() {}
